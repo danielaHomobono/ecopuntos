@@ -1,0 +1,40 @@
+-- CreateTable
+CREATE TABLE "User" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "nombre" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "puntos" INTEGER NOT NULL DEFAULT 0,
+    "rol" TEXT NOT NULL DEFAULT 'user'
+);
+
+-- CreateTable
+CREATE TABLE "Accion" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "userId" INTEGER NOT NULL,
+    "resultado" BOOLEAN NOT NULL,
+    "razon" TEXT NOT NULL,
+    "fecha" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "Accion_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "Premio" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "nombre" TEXT NOT NULL,
+    "costo" INTEGER NOT NULL,
+    "stock" INTEGER NOT NULL
+);
+
+-- CreateTable
+CREATE TABLE "Canje" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "userId" INTEGER NOT NULL,
+    "premioId" INTEGER NOT NULL,
+    "fecha" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "Canje_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "Canje_premioId_fkey" FOREIGN KEY ("premioId") REFERENCES "Premio" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");

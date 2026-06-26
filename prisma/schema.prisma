@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id       Int      @id @default(autoincrement())
+  nombre   String
+  email    String   @unique
+  password String
+  puntos   Int      @default(0)
+  rol      String   @default("user")
+  acciones Accion[]
+  canjes   Canje[]
+}
+
+model Accion {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  resultado Boolean
+  razon     String
+  fecha     DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Premio {
+  id     Int     @id @default(autoincrement())
+  nombre String
+  costo  Int
+  stock  Int
+  canjes Canje[]
+}
+
+model Canje {
+  id       Int      @id @default(autoincrement())
+  userId   Int
+  premioId Int
+  fecha    DateTime @default(now())
+  user     User     @relation(fields: [userId], references: [id])
+  premio   Premio   @relation(fields: [premioId], references: [id])
+}
