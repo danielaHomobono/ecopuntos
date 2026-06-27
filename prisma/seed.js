@@ -17,17 +17,17 @@ async function main() {
 
   await client.execute({
     sql: 'INSERT INTO Premio (nombre, costo, stock) VALUES (?, ?, ?)',
-    args: ['Premio 1', 10, 5]
+    args: ['Premio 1', 50, 5]
   });
 
   await client.execute({
     sql: 'INSERT INTO Premio (nombre, costo, stock) VALUES (?, ?, ?)',
-    args: ['Premio 2', 20, 5]
+    args: ['Premio 2', 100, 5]
   });
 
   await client.execute({
     sql: 'INSERT INTO Premio (nombre, costo, stock) VALUES (?, ?, ?)',
-    args: ['Premio 3', 30, 5]
+    args: ['Premio 3', 200, 5]
   });
 
   console.log('✓ Seed completado: usuario admin y 3 premios creados');

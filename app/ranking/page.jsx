@@ -36,7 +36,7 @@ export default async function RankingPage() {
 
   return (
     <div className="min-h-screen bg-[#1a2744] flex flex-col">
-      <Header />
+      <Header showLogout={true} />
 
       <div className="flex flex-col items-center px-4 py-8 gap-6">
 

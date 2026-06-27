@@ -7,13 +7,21 @@ import Header from '@/app/components/Header';
 import BotonCanjear from './BotonCanjear';
 
 export default async function PremiosPage() {
-  const usuario = await getUsuarioActual();
+  const usuarioToken = await getUsuarioActual();
 
-  if (!usuario) {
+  if (!usuarioToken) {
     redirect('/login');
   }
 
   const prisma = getPrisma();
+
+  const usuario = await prisma.user.findUnique({
+    where: { id: usuarioToken.id },
+  });
+
+  if (!usuario) {
+    redirect('/login');
+  }
 
   const premios = await prisma.premio.findMany({
     orderBy: { costo: 'asc' },
@@ -21,7 +29,7 @@ export default async function PremiosPage() {
 
   return (
     <div className="min-h-screen bg-[#1a2744] flex flex-col">
-      <Header />
+      <Header showLogout={true} />
 
       <div className="flex flex-col items-center px-4 py-8 gap-6">
 
@@ -49,7 +57,6 @@ export default async function PremiosPage() {
           <div className="w-full max-w-lg flex flex-col gap-4">
             {premios.map((premio) => {
               const sinStock = premio.stock <= 0;
-              const puntosInsuficientes = usuario.puntos < premio.costo;
 
               return (
                 <div
@@ -89,7 +96,11 @@ export default async function PremiosPage() {
                       Sin stock
                     </button>
                   ) : (
-                    <BotonCanjear premioId={premio.id} costoPremio={premio.costo} />
+                    <BotonCanjear
+                      premioId={premio.id}
+                      costoPremio={premio.costo}
+                      puntosUsuario={usuario.puntos}
+                    />
                   )}
                 </div>
               );

@@ -14,12 +14,16 @@ export default async function HomePage({ searchParams }) {
     redirect('/login');
   }
 
+  if (usuario.rol === 'admin') {
+    redirect('/admin');
+  }
+
   const params = await searchParams;
   const mostrarExito = params?.exito === 'true';
 
   return (
     <div className="min-h-screen bg-[#1a2744] flex flex-col">
-      <Header />
+      <Header showLogout={true} />
 
       <div className="flex flex-1 flex-col items-center justify-center px-4 gap-6">
 

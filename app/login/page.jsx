@@ -33,7 +33,11 @@ export default function LoginPage() {
         return;
       }
 
-      router.push('/home');
+      if (data.rol === 'admin') {
+        router.push('/admin');
+      } else {
+        router.push('/home');
+      }
     } catch (err) {
       setError('Error de conexión. Intenta de nuevo.');
       setLoading(false);
