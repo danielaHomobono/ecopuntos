@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, Shield, ShoppingBag, Coins } from 'lucide-react';
+import { Shield, ShoppingBag, Coins, Gift, Trophy } from 'lucide-react';
 import { getUsuarioActual } from '@/lib/getUsuarioActual';
 import { getPrisma } from '@/lib/db';
 import Header from '@/app/components/Header';
@@ -137,14 +137,23 @@ export default async function AdminPage() {
           </div>
         </div>
 
-        {/* Botón Volver a Home */}
-        <Link
-          href="/home"
-          className="w-full max-w-md block text-center border-2 border-white/30 text-white font-semibold rounded-2xl py-3 hover:bg-white/10 hover:border-white/50 active:scale-95 transition-all duration-200 inline-flex items-center justify-center gap-2"
-        >
-          <ArrowLeft size={18} />
-          Volver a Home
-        </Link>
+        {/* Botones de Navegación del Administrador */}
+        <div className="w-full max-w-md flex flex-col gap-3">
+          <Link
+            href="/premios"
+            className="w-full block text-center border-2 border-white/30 hover:border-white/55 text-white font-semibold rounded-2xl py-3 hover:bg-white/10 active:scale-95 transition-all duration-200 inline-flex items-center justify-center gap-2 shadow-md"
+          >
+            <Gift size={18} />
+            Ver Premios
+          </Link>
+          <Link
+            href="/ranking"
+            className="w-full block text-center border-2 border-white/30 hover:border-white/55 text-white font-semibold rounded-2xl py-3 hover:bg-white/10 active:scale-95 transition-all duration-200 inline-flex items-center justify-center gap-2 shadow-md"
+          >
+            <Trophy size={18} />
+            Ver Ranking
+          </Link>
+        </div>
       </div>
     </div>
   );
